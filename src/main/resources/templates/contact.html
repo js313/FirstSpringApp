@@ -50,7 +50,8 @@ Author URL: http://w3layouts.com
                 </ul>
                 <!-- th:object="${contact}": The form is bound to the contact object, which comes from the model (added in the controller). -->
                 <!-- th:field="*{name}": This binds the input field to the name property of the Contact object. -->
-                <form th:action="@{/saveMsg}" method="post" class="signin-form" th:object="${contact}">
+<!--                <form th:action="@{/saveMsg}" method="post" class="signin-form" th:object="${contact}">-->
+                <form action="/saveMsg" method="post" class="signin-form" th:object="${contact}">
                     <div class="input-grids">
                         <div class="row">
                             <div class="col-sm-6">
