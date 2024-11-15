@@ -18,7 +18,8 @@ public class ProjectSecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home").authenticated()
+                        .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
@@ -29,7 +30,8 @@ public class ProjectSecurityConfig {
                         .anyRequest().authenticated()
                         ) // denyAll(), authenticated(), etc
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
+                .formLogin(formLogin -> formLogin.loginPage("/login").defaultSuccessUrl("/dashboard").failureUrl("/login?error=true"))
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true))
                 .build();
     }
 
