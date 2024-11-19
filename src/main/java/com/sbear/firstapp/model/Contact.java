@@ -5,9 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class Contact {
+public class Contact extends BaseEntity {
+    private int contactId;
     // Need to be named same as the html form names
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message = "Name must be at least 3 characters long")
@@ -28,4 +31,6 @@ public class Contact {
     @NotBlank(message="Message must not be blank")
     @Size(min = 10, max = 100, message = "Subject must be between 10 - 100 characters long")
     private String message;
+
+    private String status;
 }

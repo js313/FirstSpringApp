@@ -1,5 +1,6 @@
 package com.sbear.firstapp.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -28,13 +29,13 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/h2-console/**").authenticated()
+                        .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
                         .anyRequest().authenticated()
                         ) // denyAll(), authenticated(), etc
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(formLogin -> formLogin.loginPage("/login").defaultSuccessUrl("/dashboard").failureUrl("/login?error=true"))
-                .logout(logout -> logout.logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true))
+                .formLogin(formLogin -> formLogin.loginPage("/login").defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll())
                 .build();
     }
 
