@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
 public class ContactService {
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
 
     @Autowired
     public ContactService(ContactRepository contactRepository) {
@@ -31,5 +32,16 @@ public class ContactService {
         }
         log.info(contact.toString());
         return isSaved;
+    }
+
+    public List<Contact> findMsgsWithOpenStatus() {
+        List<Contact> contactMsgs = contactRepository.findMsgsWithStatus(Constants.OPEN);
+        return contactMsgs;
+    }
+
+    public boolean updateMsgStatus(int contactId, String status, String updatedBy) {
+        int result = contactRepository.updateMsgStatus(contactId, status, updatedBy);
+
+        return result > 0;
     }
 }

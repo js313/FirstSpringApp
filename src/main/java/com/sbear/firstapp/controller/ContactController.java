@@ -1,16 +1,18 @@
 package com.sbear.firstapp.controller;
 
+import com.sbear.firstapp.constants.Constants;
 import com.sbear.firstapp.model.Contact;
 import com.sbear.firstapp.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -49,5 +51,19 @@ public class ContactController {
             log.error("Message Not Sent!");
         }
         return "redirect:/contact";
+    }
+
+    @RequestMapping("/displayMsgs")
+    public String displayMessages(Model model) {
+        List<Contact> contactMsgs = contactService.findMsgsWithOpenStatus();
+        model.addAttribute("contactMsgs", contactMsgs);
+        return "messages.html";
+    }
+
+    @GetMapping("/closeMsg")
+    public String closeMsg(@RequestParam(value = "id") int contactId, Authentication authentication) {
+        contactService.updateMsgStatus(contactId, Constants.CLOSE, authentication.getName());
+
+        return "redirect:/displayMsgs";
     }
 }

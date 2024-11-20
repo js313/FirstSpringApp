@@ -36,7 +36,7 @@ public class HolidayController {
         for (Holiday.Type type : types) {
             if((type == Holiday.Type.FEDERAL && !federal) || (type == Holiday.Type.FESTIVAL && !festival)) continue;
             model.addAttribute(type.toString(),
-                    (holidays.stream().filter(holiday -> holiday.type().equals(type)).collect(Collectors.toList())));
+                    (holidays.stream().filter(holiday -> holiday.getType().equals(type)).collect(Collectors.toList())));
         }
 
         return "holidays.html";
@@ -54,7 +54,7 @@ public class HolidayController {
             if((type == Holiday.Type.FEDERAL && !(display == DisplayType.all || display == DisplayType.federal)) ||
                     (type == Holiday.Type.FESTIVAL && !(display == DisplayType.all || display == DisplayType.festival))) continue;
             model.addAttribute(type.toString(),
-                    (holidays.stream().filter(holiday -> holiday.type().equals(type)).collect(Collectors.toList())));
+                    (holidays.stream().filter(holiday -> holiday.getType().equals(type)).collect(Collectors.toList())));
         }
 
         return "holidays.html";

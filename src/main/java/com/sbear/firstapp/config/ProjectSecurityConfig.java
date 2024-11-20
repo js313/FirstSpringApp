@@ -20,17 +20,19 @@ public class ProjectSecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/dashboard").authenticated()
-                        .requestMatchers("/", "/home").permitAll()
-                        .requestMatchers("/holidays/**").permitAll()
-                        .requestMatchers("/contact").permitAll()
-                        .requestMatchers("/saveMsg").permitAll()
-                        .requestMatchers("/courses").permitAll()
-                        .requestMatchers("/about").permitAll()
-                        .requestMatchers("/assets/**").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
-                        .anyRequest().authenticated()
+                                .requestMatchers("/dashboard").authenticated()
+                                .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
+                                .requestMatchers("/displayMsgs").hasRole("ADMIN")
+                                .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+                                .requestMatchers("/", "/home").permitAll()
+                                .requestMatchers("/holidays/**").permitAll()
+                                .requestMatchers("/contact").permitAll()
+                                .requestMatchers("/saveMsg").permitAll()
+                                .requestMatchers("/courses").permitAll()
+                                .requestMatchers("/about").permitAll()
+                                .requestMatchers("/assets/**").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .anyRequest().authenticated()
                         ) // denyAll(), authenticated(), etc
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .httpBasic(Customizer.withDefaults())
@@ -41,7 +43,7 @@ public class ProjectSecurityConfig {
 
     @Bean
     InMemoryUserDetailsManager userDetailsManager() {
-        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("12345")).roles("USER", "ADMIN").build();
+        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("12345")).roles("ADMIN").build();
         UserDetails user = User.builder().username("user").password(passwordEncoder().encode("12345")).roles("USER").build();
 
         return new InMemoryUserDetailsManager(user, admin);
