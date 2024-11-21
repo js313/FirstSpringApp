@@ -36,13 +36,13 @@ public class LoggerAspect {
      */
     @Around("execution(* com.sbear.firstapp..*.*(..))")
     public Object log(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        log.info(proceedingJoinPoint.getSignature().toString() + " method execution start");
-        Instant start = Instant.now();
+//        log.info(proceedingJoinPoint.getSignature().toString() + " method execution start");
+//        Instant start = Instant.now();
         Object returnObj = proceedingJoinPoint.proceed();
-        Instant finish = Instant.now();
-        long timeElapsed = Duration.between(start, finish).toMillis();
-        log.info("Time took to execute " + proceedingJoinPoint.getSignature().toString() + " method is : "+timeElapsed);
-        log.info(proceedingJoinPoint.getSignature().toString() + " method execution end");
+//        Instant finish = Instant.now();
+//        long timeElapsed = Duration.between(start, finish).toMillis();
+//        log.info("Time took to execute " + proceedingJoinPoint.getSignature().toString() + " method is : "+timeElapsed);
+//        log.info(proceedingJoinPoint.getSignature().toString() + " method execution end");
         return returnObj;
     }
 

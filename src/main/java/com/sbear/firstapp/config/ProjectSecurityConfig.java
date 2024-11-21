@@ -18,10 +18,10 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers("/login"))
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/dashboard").authenticated()
-                                .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
+//                                .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
                                 .requestMatchers("/displayMsgs").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/", "/home").permitAll()
@@ -34,7 +34,7 @@ public class ProjectSecurityConfig {
                                 .requestMatchers("/login").permitAll()
                                 .anyRequest().authenticated()
                         ) // denyAll(), authenticated(), etc
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+//                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(formLogin -> formLogin.loginPage("/login").defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll())

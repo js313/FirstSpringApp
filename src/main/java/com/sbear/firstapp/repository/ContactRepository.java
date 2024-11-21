@@ -22,13 +22,13 @@ public class ContactRepository {
     }
 
     public int saveContactMessage(Contact contact) {
-        String sql = "INSERT INTO CONTACT_MSG (NAME,MOBILE_NUM,EMAIL,SUBJECT,MESSAGE,STATUS,CREATED_AT,CREATED_BY) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO contact_msg (name,mobile_num,email,subject,message,status,created_at,created_by) VALUES (?,?,?,?,?,?,?,?)";
 
         return jdbcTemplate.update(sql, contact.getName(), contact.getMobileNum(), contact.getEmail(), contact.getSubject(), contact.getMessage(), contact.getStatus(), contact.getCreatedAt(), contact.getCreatedBy());
     }
 
     public List<Contact> findMsgsWithStatus(String status) {
-        String sql = "SELECT * FROM CONTACT_MSG WHERE STATUS = ?";
+        String sql = "SELECT * FROM contact_msg WHERE status = ?";
         // Anonymous class syntax, 'PreparedStatementSetter' is an interface(functional interface) and like lambda function, we are implementing it when needed!!!
         PreparedStatementSetter preparedStatementSetter = new PreparedStatementSetter() {
             @Override
@@ -40,7 +40,7 @@ public class ContactRepository {
     }
 
     public int updateMsgStatus(int contactId, String status, String updatedBy) {
-        String sql = "UPDATE CONTACT_MSG SET STATUS = ?, UPDATED_BY = ?, UPDATED_AT = ? WHERE CONTACT_ID = ?";
+        String sql = "UPDATE contact_msg SET status = ?, updated_by = ?, updated_at = ? WHERE contact_id = ?";
         // preferable to use prepared statements
         return jdbcTemplate.update(sql, status, updatedBy, LocalDateTime.now(), contactId);
     }

@@ -21,7 +21,7 @@ public class HolidayRepository {
     }
 
     public List<Holiday> getHolidayList() {
-        String sql = "SELECT * FROM HOLIDAYS";
+        String sql = "SELECT * FROM holidays";
 
         return jdbcTemplate.query(sql, new HolidayRowMapper());
     }
