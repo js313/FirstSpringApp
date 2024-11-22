@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// REDUNDANT AFTER IMPLEMENTING JPA
+
 public class ContactRowMapper implements RowMapper<Contact> {
     @Override
     public Contact mapRow(ResultSet resultSet, int rowNum) throws SQLException {

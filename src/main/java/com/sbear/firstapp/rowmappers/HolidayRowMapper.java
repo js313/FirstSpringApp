@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// REDUNDANT AFTER IMPLEMENTING JPA
+
 public class HolidayRowMapper implements RowMapper<Holiday> {
 
     @Override

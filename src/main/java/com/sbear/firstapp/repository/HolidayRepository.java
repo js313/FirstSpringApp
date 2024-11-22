@@ -1,28 +1,12 @@
 package com.sbear.firstapp.repository;
 
 import com.sbear.firstapp.model.Holiday;
-import com.sbear.firstapp.rowmappers.HolidayRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
+// Look at previous commits for Revision of different concepts that have been removed for newer ones
 
 @Repository
-public class HolidayRepository {
-    private final JdbcTemplate jdbcTemplate;
+public interface HolidayRepository extends CrudRepository<Holiday, String> {
 
-    @Autowired
-    HolidayRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public List<Holiday> getHolidayList() {
-        String sql = "SELECT * FROM holidays";
-
-        return jdbcTemplate.query(sql, new HolidayRowMapper());
-    }
 }

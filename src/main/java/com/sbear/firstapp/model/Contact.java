@@ -1,5 +1,6 @@
 package com.sbear.firstapp.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -9,11 +10,18 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
+@Entity
+@Table(name = "contact_msg")   // Only need to do this if class name is different from table name, it compares by removing special characters and without casing
 public class Contact extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contact_id")    // Again, DEMO
     private int contactId;
+
     // Need to be named same as the html form names
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message = "Name must be at least 3 characters long")
+    @Column(name = "name")  // just as an example, no need to annotate this if column name and variable name are same
     private String name;
 
     @NotBlank(message="Mobile Number must not be blank")

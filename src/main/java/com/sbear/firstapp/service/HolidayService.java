@@ -5,7 +5,7 @@ import com.sbear.firstapp.repository.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +18,10 @@ public class HolidayService {
     }
 
     public List<Holiday> getHolidayList() {
-        return holidayRepository.getHolidayList();
+        List<Holiday> holidayList = new ArrayList<>();
+        for (Holiday holiday : holidayRepository.findAll()) {
+            holidayList.add(holiday);
+        }
+        return holidayList;
     }
 }
