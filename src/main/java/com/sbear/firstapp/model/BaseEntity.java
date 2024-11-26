@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class)  // Automatically populates based on annotations, need to enable for whole app, see main class
 public class BaseEntity {
     @CreatedDate
     @Column(updatable = false)
