@@ -43,15 +43,7 @@ public class ProjectSecurityConfig {
     }
 
     @Bean
-    InMemoryUserDetailsManager userDetailsManager() {
-        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("12345")).roles("ADMIN").build();
-        UserDetails user = User.builder().username("user").password(passwordEncoder().encode("12345")).roles("USER").build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
