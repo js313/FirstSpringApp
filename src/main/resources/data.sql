@@ -21,3 +21,7 @@ INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
 
 INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
   VALUES (' Nov 11 ','Veterans Day','FEDERAL',CURDATE(),'DBA');
+
+INSERT INTO `person` (`name`,`email`,`mobile_number`,`pwd`,`role_id`,`created_at`, `created_by`)
+  VALUES ('Admin','admin@admin.com','3443434343','$2a$12$WYnU4VMgVRPJ4Xrq.Q7pUOboKkbqWDQWbLOKJBwx0WkeQ2pCq8/7.', 1 ,CURDATE(),'DBA');
+

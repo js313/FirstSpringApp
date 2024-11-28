@@ -24,6 +24,8 @@ public class ProjectSecurityConfig {
 //                                .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
                                 .requestMatchers("/displayMsgs").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+                                .requestMatchers("/displayProfile").authenticated()
+                                .requestMatchers("/updateProfile").authenticated()
                                 .requestMatchers("/", "/home").permitAll()
                                 .requestMatchers("/holidays/**").permitAll()
                                 .requestMatchers("/contact").permitAll()

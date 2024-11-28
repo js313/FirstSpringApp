@@ -29,7 +29,7 @@ public class UsernamePwdAuthenticationProvider implements AuthenticationProvider
         String pwd = authentication.getCredentials().toString();
         Person person = personRepository.readByEmail(email);
         if(person != null && person.getPersonId() > 0 && passwordEncoder.matches(pwd, person.getPwd())) {
-            return new UsernamePasswordAuthenticationToken(person.getName(), pwd, getGrantedAuthorities(person.getRoles()));
+            return new UsernamePasswordAuthenticationToken(email, pwd, getGrantedAuthorities(person.getRoles()));
         }
         return null;
     }

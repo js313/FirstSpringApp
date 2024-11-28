@@ -1,6 +1,4 @@
-use sql12746200;
-
-CREATE TABLE `sql12746200`.`contact_msg` (
+CREATE TABLE `mydb`.`contact_msg` (
   `contact_id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `mobile_num` VARCHAR(10) NOT NULL,
@@ -14,7 +12,7 @@ CREATE TABLE `sql12746200`.`contact_msg` (
   `updated_by` VARCHAR(50) NULL DEFAULT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE `sql12746200`.`holidays` (
+CREATE TABLE `mydb`.`holidays` (
   `day` VARCHAR(20) NOT NULL,
   `reason` VARCHAR(100) NOT NULL,
   `type` VARCHAR(20) NOT NULL,
@@ -24,7 +22,7 @@ CREATE TABLE `sql12746200`.`holidays` (
   `updated_by` VARCHAR(50) NULL DEFAULT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE `sql12746200`.`roles` (
+CREATE TABLE `mydb`.`roles` (
   `role_id` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(50) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -34,7 +32,7 @@ CREATE TABLE `sql12746200`.`roles` (
   PRIMARY KEY (`role_id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS`sql12746200`.`address` (
+CREATE TABLE IF NOT EXISTS`mydb`.`address` (
   `address_id` INT NOT NULL AUTO_INCREMENT,
   `address1` VARCHAR(200) NOT NULL,
   `address2` VARCHAR(200) DEFAULT NULL,
@@ -48,7 +46,7 @@ CREATE TABLE IF NOT EXISTS`sql12746200`.`address` (
   PRIMARY KEY (`address_id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE `sql12746200`.`person` (
+CREATE TABLE `mydb`.`person` (
   `person_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
@@ -61,6 +59,6 @@ CREATE TABLE `sql12746200`.`person` (
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_by` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`person_id`),
-  FOREIGN KEY (`role_id`) REFERENCES `sql12746200`.`roles`(`role_id`),
-  FOREIGN KEY (`address_id`) REFERENCES `sql12746200`.`address`(`address_id`)
+  FOREIGN KEY (`role_id`) REFERENCES `mydb`.`roles`(`role_id`),
+  FOREIGN KEY (`address_id`) REFERENCES `mydb`.`address`(`address_id`)
 ) ENGINE = InnoDB;
