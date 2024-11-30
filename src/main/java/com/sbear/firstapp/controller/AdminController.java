@@ -1,14 +1,15 @@
 package com.sbear.firstapp.controller;
 
+import com.sbear.firstapp.model.Courses;
 import com.sbear.firstapp.model.Grade;
 import com.sbear.firstapp.model.Person;
+import com.sbear.firstapp.repository.CoursesRepository;
 import com.sbear.firstapp.repository.GradeRepository;
 import com.sbear.firstapp.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 @Controller
@@ -26,6 +26,8 @@ public class AdminController {
     GradeRepository gradeRepository;
     @Autowired
     PersonRepository personRepository;
+    @Autowired
+    CoursesRepository coursesRepository;
 
     @RequestMapping("/displayClasses")
     public String displayClasses(Model model) {
@@ -61,7 +63,7 @@ public class AdminController {
 
         return "/admin/displayClasses";
     }
-    @Transactional
+
     @RequestMapping("/displayStudents")
     public String displayStudents(Model model, @RequestParam("gradeId") int gradeId, @RequestParam(value = "error", required = false) Error error,HttpSession httpSession) {
         if(error != null) {
@@ -102,5 +104,64 @@ public class AdminController {
             httpSession.setAttribute("grade", grade);
         }
         return "redirect:/admin/displayStudents?gradeId=" + grade.getGradeId();
+    }
+
+    @RequestMapping("/displayCourses")
+    public String displayCourses(Model model) {
+        List<Courses> courses = coursesRepository.findAll();
+        model.addAttribute("courses", courses);
+        model.addAttribute("course", new Courses());
+        return "courses_secure.html";
+    }
+
+    @PostMapping("/addNewCourse")
+    public String addNewCourse(Model model, @ModelAttribute("course") Courses course) {
+        Courses newCourse = coursesRepository.save(course);
+        if(newCourse.getCourseId() > 0) {
+            return "redirect:/admin/displayCourses";
+        }
+        return "courses_secure.html";
+    }
+
+    @RequestMapping("/viewStudents")
+    public String viewStudents(@RequestParam("id") int courseId, @RequestParam(value = "error", required = false) String error, Model model, HttpSession httpSession) {
+        if(error != null) {
+            model.addAttribute("errorMessage", "Invalid Email entered!!");
+        }
+        Optional<Courses> course = coursesRepository.findById(courseId);
+        httpSession.setAttribute("courses", course.get());
+        model.addAttribute("courses", course.get());
+        model.addAttribute("person", new Person());
+        return "course_students.html";
+    }
+
+    @PostMapping("/addStudentToCourse")
+    public String addStudentToCourse(Model model, @ModelAttribute Person person, HttpSession httpSession) {
+        Person personEntity = personRepository.readByEmail(person.getEmail());
+        Courses course = (Courses) httpSession.getAttribute("courses");
+        if(personEntity != null &&personEntity.getPersonId() > 0) {
+            personEntity.getCourses().add(course);
+            personEntity.setCourses(personEntity.getCourses());
+            course.getPersons().add(personEntity);
+            course.setPersons(course.getPersons());
+            personRepository.save(personEntity);
+            httpSession.setAttribute("courses", course);
+            return "redirect:/admin/viewStudents?id=" + course.getCourseId();
+        }
+        return "redirect:/admin/viewStudents?id=" + course.getCourseId() + "&error=true";
+    }
+
+    @RequestMapping("/deleteStudentFromCourse")
+    public String deleteStudentsFromCourse(Model model, @RequestParam("personId") int personId, HttpSession httpSession) {
+        Courses course = (Courses) httpSession.getAttribute("courses");
+        Optional<Person> person = personRepository.findById(personId);
+        if(person.isPresent()) {
+            person.get().getCourses().remove(course);
+            personRepository.save(person.get());
+            course.getPersons().remove(person.get());
+            httpSession.setAttribute("courses", course);
+            return "redirect:/admin/viewStudents?id=" + course.getCourseId();
+        }
+        return "redirect:/admin/viewStudents?id=" + course.getCourseId() + "&error=true";
     }
 }
