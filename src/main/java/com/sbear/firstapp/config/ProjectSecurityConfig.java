@@ -22,7 +22,7 @@ public class ProjectSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/dashboard").authenticated()
 //                                .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
-                                .requestMatchers("/displayMsgs").hasRole("ADMIN")
+                                .requestMatchers("/displayMessages/**").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/student/**").hasRole("STUDENT")
