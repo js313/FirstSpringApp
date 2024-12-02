@@ -74,6 +74,6 @@ public class ContactController {
     public String closeMsg(@RequestParam(value = "id") int contactId) {
         contactService.updateMsgStatus(contactId, Constants.CLOSE);
 
-        return "redirect:/displayMsgs";
+        return "redirect:/displayMessages/page/1?sortField=name&sortDir=asc";
     }
 }
