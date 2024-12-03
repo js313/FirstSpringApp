@@ -41,18 +41,21 @@ public class ContactService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
 
-        return contactRepository.findByStatus(Constants.OPEN, pageable);
+        return contactRepository.findOpenMsgs(Constants.OPEN, pageable);
     }
 
     public boolean updateMsgStatus(int contactId, String status) {
-        Optional<Contact> contact = contactRepository.findById(contactId);
-        contact.ifPresent(sureContact -> {
-            sureContact.setStatus(status);
-        });
-        if(contact.isPresent()) {
-            Contact updatedContact = contactRepository.save(contact.get());
-            return updatedContact.getContactId() > 0;
-        }
-        return false;
+//        Optional<Contact> contact = contactRepository.findById(contactId);
+//        contact.ifPresent(sureContact -> {
+//            sureContact.setStatus(status);
+//        });
+//        if(contact.isPresent()) {
+//            Contact updatedContact = contactRepository.save(contact.get());
+//            return updatedContact.getContactId() > 0;
+//        }
+//        return false;
+
+        int updatedColumns = contactRepository.updateMsgStatus(status, contactId);
+        return updatedColumns > 0;
     }
 }

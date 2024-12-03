@@ -59,7 +59,6 @@ public class ContactController {
                                   @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir) {
         Page<Contact> contactMsgs = contactService.findMsgsWithOpenStatus(pageNum, sortField, sortDir);
         List<Contact> contactList = contactMsgs.getContent();
-        System.out.println(sortDir);
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", contactMsgs.getTotalPages());
         model.addAttribute("totalMsgs", contactMsgs.getTotalElements());

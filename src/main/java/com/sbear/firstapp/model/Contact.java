@@ -12,6 +12,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "contact_msg")   // Only need to do this if class name is different from table name, it compares by removing special characters and without casing
+@NamedQueries({
+        @NamedQuery(name = "Contact.findOpenMsgs", query = "SELECT c FROM Contact c WHERE c.status = :status"),
+        @NamedQuery(name = "Contact.updateMsgStatus", query = "UPDATE Contact c SET c.status = ?1 WHERE c.status = :status"),
+})  // There's also "NamedNativeQueries"
 public class Contact extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

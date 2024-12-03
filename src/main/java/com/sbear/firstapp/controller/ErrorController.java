@@ -11,7 +11,6 @@ public class ErrorController {
     // if it is under a specific controller it will only intercept errors from the APIs under that Controller
     @ExceptionHandler(Exception.class)
     String globalErrorHandler(Exception exception, Model model) {
-        System.out.println(exception.getMessage());
         model.addAttribute("errorMsg", exception.getMessage());
         return "error.html";
     }
