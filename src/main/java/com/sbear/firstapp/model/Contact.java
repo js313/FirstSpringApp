@@ -1,5 +1,6 @@
 package com.sbear.firstapp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +31,7 @@ public class Contact extends BaseEntity {
 
     @NotBlank(message="Mobile Number must not be blank")
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 DIGITS")
+    @JsonProperty("mobileNum")
     private String mobileNum;
 
     @NotBlank(message="Email must not be blank")

@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
@@ -19,6 +20,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
     // MIND-BLOWING STUFF
     // Reference: https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
     List<Contact> findByStatus(String status);
+    Optional<Contact> findByContactIdAndStatus(int contactId, String status);
 
 //    @Query("SELECT c FROM Contact c WHERE c.status = :status")  //JDQL Query
     @Query(value = "SELECT * FROM contact_msg c WHERE c.status = :status", nativeQuery = true)
