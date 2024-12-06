@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
-@Controller
+@Controller("profileControllerBean") // To avoid clashing names with spring data rest package
 public class ProfileController {
     @Autowired
     PersonRepository personRepository;

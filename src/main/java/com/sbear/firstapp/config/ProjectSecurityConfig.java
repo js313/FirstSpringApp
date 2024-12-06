@@ -21,7 +21,8 @@ public class ProjectSecurityConfig {
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg")
                         .ignoringRequestMatchers("/login")
                         .ignoringRequestMatchers("/public/**")
-                        .ignoringRequestMatchers("/api/**"))
+                        .ignoringRequestMatchers("/api/**")
+                        .ignoringRequestMatchers("/data-api/**"))
                         .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/dashboard").authenticated()
 //                                .requestMatchers(PathRequest.toH2Console()).authenticated() // OR "/h2-console/**
@@ -32,6 +33,7 @@ public class ProjectSecurityConfig {
                                 .requestMatchers("/api/**").authenticated()
                                 .requestMatchers("/displayProfile").authenticated()
                                 .requestMatchers("/updateProfile").authenticated()
+                                .requestMatchers("/data-api/**").authenticated()
                                 .requestMatchers("/", "/home").permitAll()
                                 .requestMatchers("/holidays/**").permitAll()
                                 .requestMatchers("/contact").permitAll()

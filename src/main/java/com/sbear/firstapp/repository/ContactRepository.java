@@ -8,12 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RepositoryRestResource(exported = false)
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
     // Abstract method for some custom queries
     // if you follow the naming convention spring will generate queries on runtime based upon method name
@@ -24,7 +27,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
 //    @Query("SELECT c FROM Contact c WHERE c.status = :status")  //JDQL Query
     @Query(value = "SELECT * FROM contact_msg c WHERE c.status = :status", nativeQuery = true)
-    Page<Contact> findByStatus(@Param("status") String status, Pageable pageable);
+    Page<Contact> findByStatusWithQuery(@Param("status") String status, Pageable pageable);
 
     @Transactional
     @Modifying
